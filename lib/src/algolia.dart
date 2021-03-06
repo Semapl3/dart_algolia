@@ -56,7 +56,7 @@ class Algolia {
 
   Future<AlgoliaIndexesSnapshot> getIndices() async {
     String _url = '${_host}indexes';
-    http.Response response = await http.get(
+    Response response = await get(
       Uri.parse(_url),
       headers: _header,
     );

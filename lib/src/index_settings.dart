@@ -19,7 +19,7 @@ class AlgoliaIndexSettings extends AlgoliaSettings {
 
   Future<Map<String, dynamic>?> getSettings() async {
     String url = '${algolia._host}indexes/$_index/settings';
-    http.Response response = await http.get(
+    Response response = await get(
       Uri.parse(url),
       headers: algolia._header,
     );
@@ -61,7 +61,7 @@ class AlgoliaSettings {
         _parameters.keys.isNotEmpty, 'No setting parameter to update found.');
 
     String url = '${algolia._host}indexes/$_index/settings';
-    http.Response response = await http.put(
+    var response = await put(
       Uri.parse(url),
       headers: algolia._header,
       body:

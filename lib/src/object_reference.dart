@@ -24,7 +24,7 @@ class AlgoliaObjectReference {
     assert(_objectId != null, 'You can\'t get an object without an objectID.');
 
     String url = '${algolia._host}indexes/$encodedIndex/$encodedObjectID';
-    http.Response response = await http.get(
+    Response response = await get(
       Uri.parse(url),
       headers: algolia._header,
     );
@@ -48,7 +48,7 @@ class AlgoliaObjectReference {
       url += '/$encodedObjectID';
     }
 
-    http.Response response = await http.post(
+    Response response = await post(
       Uri.parse(url),
       headers: algolia._header,
       body: utf8.encode(json.encode(data, toEncodable: jsonEncodeHelper)),
@@ -79,7 +79,7 @@ class AlgoliaObjectReference {
       url = '$url/$encodedObjectID';
     }
     data['objectID'] = _objectId;
-    http.Response response = await http.put(
+    var response = await put(
       Uri.parse(url),
       headers: algolia._header,
       body: utf8.encode(json.encode(data, toEncodable: jsonEncodeHelper)),
@@ -123,7 +123,7 @@ class AlgoliaObjectReference {
     }
     data['objectID'] = _objectId;
     data['createIfNotExists'] = createIfNotExists;
-    http.Response response = await http.put(
+    var response = await put(
       Uri.parse(url),
       headers: algolia._header,
       body: utf8.encode(json.encode(data, toEncodable: jsonEncodeHelper)),
@@ -148,7 +148,7 @@ class AlgoliaObjectReference {
     if (_objectId != null) {
       url = '$url/$encodedObjectID';
     }
-    http.Response response = await http.delete(
+    var response = await delete(
       Uri.parse(url),
       headers: algolia._header,
     );

@@ -66,7 +66,7 @@ class AlgoliaBatch {
 
         String url = '${algolia._host}indexes/$_index/batch';
 
-        http.Response response = await http.post(
+        Response response = await post(
           Uri.parse(url),
           headers: algolia._header,
           body: utf8.encode(json

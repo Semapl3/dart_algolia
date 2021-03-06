@@ -116,7 +116,7 @@ class AlgoliaIndexReference extends AlgoliaQuery {
     final List<Map> objects = List.generate(objectIds.length,
         (int i) => {'indexName': index, 'objectID': objectIds[i]});
     final Map requests = {'requests': objects};
-    http.Response response = await http.post(
+    Response response = await post(
       Uri.parse(url),
       headers: algolia._header,
       body: utf8.encode(json.encode(requests, toEncodable: jsonEncodeHelper)),
@@ -140,7 +140,7 @@ class AlgoliaIndexReference extends AlgoliaQuery {
   ///
   Future<AlgoliaTask> clearIndex() async {
     String url = '${algolia._host}indexes/$encodedIndex/clear';
-    http.Response response = await http.post(
+    Response response = await post(
       Uri.parse(url),
       headers: algolia._header,
       encoding: Encoding.getByName('utf-8'),
@@ -190,7 +190,7 @@ class AlgoliaIndexReference extends AlgoliaQuery {
     if (scopes != null) {
       data['scope'] = scopes.map<String>((s) => _scopeToString(s)).toList();
     }
-    http.Response response = await http.post(
+    Response response = await post(
       Uri.parse(url),
       headers: algolia._header,
       encoding: Encoding.getByName('utf-8'),
@@ -219,8 +219,8 @@ class AlgoliaIndexReference extends AlgoliaQuery {
   ///
   Future<AlgoliaTask> replaceAllObjects(
       List<Map<String, dynamic>> objects) async {
-    final AlgoliaIndexReference tempIndex = algolia.index(Uuid().v4());
-    final AlgoliaTask copyTask = await copyIndex(
+    final tempIndex = algolia.index(Uuid().v4());
+    final copyTask = await copyIndex(
       destination: tempIndex.index,
       scopes: [
         CopyScope.Settings,
@@ -229,7 +229,7 @@ class AlgoliaIndexReference extends AlgoliaQuery {
       ],
     );
     await copyTask.waitTask();
-    final AlgoliaTask batchTask = await tempIndex.addObjects(objects);
+    final batchTask = await tempIndex.addObjects(objects);
     await batchTask.waitTask();
     return await tempIndex.moveIndex(destination: index);
   }
@@ -240,8 +240,8 @@ class AlgoliaIndexReference extends AlgoliaQuery {
   /// Delete the index referred to by this [AlgoliaIndexReference].
   ///
   Future<AlgoliaTask> deleteIndex() async {
-    String url = '${algolia._host}indexes/$encodedIndex';
-    http.Response response = await http.delete(
+    var url = '${algolia._host}indexes/$encodedIndex';
+    var response = await delete(
       Uri.parse(url),
       headers: algolia._header,
     );
@@ -326,7 +326,7 @@ class AlgoliaMultiIndexesReference {
       });
     }
     String url = '${_algolia!._host}indexes/*/queries';
-    http.Response response = await http.post(
+    Response response = await post(
       Uri.parse(url),
       headers: _algolia!._header,
       body: utf8.encode(json.encode({

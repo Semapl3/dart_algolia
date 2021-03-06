@@ -30,7 +30,7 @@ class AlgoliaTask {
   Future<bool> taskStatus() async {
     String url = '${algolia._host}indexes/$_index/task/$taskID';
 
-    http.Response response = await http.get(
+    Response response = await get(
       Uri.parse(url),
       headers: algolia._header,
     );
