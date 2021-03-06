@@ -63,8 +63,8 @@ class AlgoliaQuery {
         'attributesToRetrieve': const ['*']
       });
     }
-    String url = '${algolia._host}indexes/$_index/query';
-    Response response = await post(
+    var url = '${algolia._host}indexes/$_index/query';
+    var response = await post(
       Uri.parse(url),
       headers: algolia._header,
       body:
