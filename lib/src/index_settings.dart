@@ -18,8 +18,8 @@ class AlgoliaIndexSettings extends AlgoliaSettings {
         super._(algolia, indexName);
 
   Future<Map<String, dynamic>?> getSettings() async {
-    String url = '${algolia._host}indexes/$_index/settings';
-    Response response = await get(
+    var url = '${algolia._host}indexes/$_index/settings';
+    var response = await get(
       Uri.parse(url),
       headers: algolia._header,
     );
@@ -60,7 +60,7 @@ class AlgoliaSettings {
     assert(
         _parameters.keys.isNotEmpty, 'No setting parameter to update found.');
 
-    String url = '${algolia._host}indexes/$_index/settings';
+    var url = '${algolia._host}indexes/$_index/settings';
     var response = await put(
       Uri.parse(url),
       headers: algolia._header,
@@ -73,7 +73,7 @@ class AlgoliaSettings {
       throw AlgoliaError._(body, response.statusCode);
     }
 
-    AlgoliaTask task = AlgoliaTask._(algolia, _index, body);
+    var task = AlgoliaTask._(algolia, _index, body);
     return task;
   }
 
@@ -328,7 +328,7 @@ class AlgoliaSettings {
   AlgoliaSettings setFacetFilter(dynamic value) {
     assert(value is String || value is List<String>,
         'value must be either String | List<String> but was found `${value.runtimeType}`');
-    final List<dynamic> facetFilters =
+    final facetFilters =
         List<dynamic>.from(_parameters['facetFilters']);
     assert(facetFilters.where((dynamic item) => value == item).isEmpty,
         'FacetFilters $value already exists in this query');
@@ -355,7 +355,7 @@ class AlgoliaSettings {
   /// Source: [Learn more](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/)
   ///
   AlgoliaSettings setOptionalFilter(String value) {
-    final List<String> optionalFilters =
+    final optionalFilters =
         List<String>.from(_parameters['optionalFilters']);
     assert(optionalFilters.where((String item) => value == item).isEmpty,
         'OptionalFilters $value already exists in this query');
@@ -397,7 +397,7 @@ class AlgoliaSettings {
   /// Source: [Learn more](https://www.algolia.com/doc/api-reference/api-parameters/numericFilters/)
   ///
   AlgoliaSettings setNumericFilter(String value) {
-    final List<String> numericFilters =
+    final numericFilters =
         List<String>.from(_parameters['numericFilters']);
     assert(numericFilters.where((String item) => value == item).isEmpty,
         'NumericFilters $value already exists in this query');
@@ -431,7 +431,7 @@ class AlgoliaSettings {
   /// Source: [Learn more](https://www.algolia.com/doc/api-reference/api-parameters/tagFilters/)
   ///
   AlgoliaSettings setTagFilter(String value) {
-    final List<String> tagFilters =
+    final tagFilters =
         List<String>.from(_parameters['tagFilters']);
     assert(tagFilters.where((String item) => value == item).isEmpty,
         'TagFilters $value already exists in this query');
@@ -1093,7 +1093,7 @@ class AlgoliaSettings {
   AlgoliaSettings setInsideBoundingBox(List<BoundingBox> value) {
     assert(value.isNotEmpty, 'value can not be empty');
     assert(!_parameters.containsKey('insideBoundingBox'));
-    List<List<num>> list =
+    var list =
         value.map((v) => [v.p1Lat, v.p1Lng, v.p2Lat, v.p2Lng]).toList();
     return _copyWithParameters(<String, dynamic>{'insideBoundingBox': list});
   }
@@ -1132,7 +1132,7 @@ class AlgoliaSettings {
   AlgoliaSettings setInsidePolygon(List<BoundingPolygonBox> value) {
     assert(value.isNotEmpty, 'value can not be empty');
     assert(!_parameters.containsKey('insidePolygon'));
-    List<List<num>> list = value
+    var list = value
         .map((v) => [v.p1Lat, v.p1Lng, v.p2Lat, v.p2Lng, v.p3Lat, v.p3Lng])
         .toList();
     return _copyWithParameters(<String, dynamic>{'insidePolygon': list});

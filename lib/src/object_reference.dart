@@ -23,8 +23,8 @@ class AlgoliaObjectReference {
   Future<AlgoliaObjectSnapshot> getObject() async {
     assert(_objectId != null, 'You can\'t get an object without an objectID.');
 
-    String url = '${algolia._host}indexes/$encodedIndex/$encodedObjectID';
-    Response response = await get(
+    var url = '${algolia._host}indexes/$encodedIndex/$encodedObjectID';
+    var response = await get(
       Uri.parse(url),
       headers: algolia._header,
     );
@@ -42,13 +42,13 @@ class AlgoliaObjectReference {
     assert(_index != null && _index != '*' && _index != '',
         'IndexName is required, but it has `*` multiple flag or `null`.');
 
-    String url = '${algolia._host}indexes/$encodedIndex';
+    var url = '${algolia._host}indexes/$encodedIndex';
 
     if (_objectId != null) {
       url += '/$encodedObjectID';
     }
 
-    Response response = await post(
+    var response = await post(
       Uri.parse(url),
       headers: algolia._header,
       body: utf8.encode(json.encode(data, toEncodable: jsonEncodeHelper)),
@@ -74,7 +74,7 @@ class AlgoliaObjectReference {
   Future<AlgoliaTask> updateData(Map<String, dynamic> data) async {
     assert(_index != null && _index != '*' && _index != '',
         'IndexName is required, but it has `*` multiple flag or `null`.');
-    String url = '${algolia._host}indexes/$encodedIndex';
+    var url = '${algolia._host}indexes/$encodedIndex';
     if (_objectId != null) {
       url = '$url/$encodedObjectID';
     }
@@ -117,7 +117,7 @@ class AlgoliaObjectReference {
     assert(_index != null && _index != '*' && _index != '',
         'IndexName is required, but it has `*` multiple flag or `null`.');
 
-    String url = '${algolia._host}indexes/$encodedIndex';
+    var url = '${algolia._host}indexes/$encodedIndex';
     if (_objectId != null) {
       url = '$url/$encodedObjectID/partial';
     }
@@ -144,7 +144,7 @@ class AlgoliaObjectReference {
     assert(
         _objectId != null, 'You can\'t delete an object without an objectID.');
 
-    String url = '${algolia._host}indexes/$encodedIndex';
+    var url = '${algolia._host}indexes/$encodedIndex';
     if (_objectId != null) {
       url = '$url/$encodedObjectID';
     }

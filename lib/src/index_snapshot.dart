@@ -5,7 +5,7 @@ class AlgoliaIndexesSnapshot {
       : items = map['items'] != null
             ? (map['items'] as List<dynamic>)
                 .map((dynamic o) {
-                  Map<String, dynamic> newMap = Map<String, dynamic>.from(o);
+                  var newMap = Map<String, dynamic>.from(o);
                   return AlgoliaIndexSnapshot.fromMap(algolia, newMap);
                 })
                 .toList()
