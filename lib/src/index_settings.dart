@@ -8,19 +8,18 @@ part of algolia;
 /// the methods inherited from [AlgoliaSettings]).
 ///
 class AlgoliaIndexSettings extends AlgoliaSettings {
-  const AlgoliaIndexSettings. _(
+  const AlgoliaIndexSettings._(
     Algolia algolia,
     String indexName, {
     Map<String, dynamic> parameters,
-  })  : assert(indexName != null && indexName != '*',
-            'Index Name is required, but was found: $indexName'),
+  })  : assert(indexName != null && indexName != '*', 'Index Name is required, but was found: $indexName'),
         super._(algolia, indexName);
 
   Future<Map<String, dynamic>> getSettings() async {
     try {
       String url = '${algolia._host}indexes/$_index/settings';
       Response response = await get(
-        url,
+        Uri.parse(url),
         headers: algolia._header,
       );
       Map<String, dynamic> body = json.decode(response.body);
@@ -36,8 +35,7 @@ class AlgoliaSettings {
     this.algolia,
     String indexName, {
     final Map<String, dynamic> parameters,
-  })  : assert(indexName != null && indexName != '*',
-            'Index Name is required, but was found: $indexName'),
+  })  : assert(indexName != null && indexName != '*', 'Index Name is required, but was found: $indexName'),
         this._index = indexName,
         _parameters = parameters ?? const <String, dynamic>{};
 
@@ -57,15 +55,13 @@ class AlgoliaSettings {
 
   Future<AlgoliaTask> setSettings() async {
     try {
-      assert(
-          _parameters.keys.isNotEmpty, 'No setting parameter to update found.');
+      assert(_parameters.keys.isNotEmpty, 'No setting parameter to update found.');
 
       String url = '${algolia._host}indexes/$_index/settings';
       Response response = await put(
-        url,
+        Uri.parse(url),
         headers: algolia._header,
-        body: utf8
-            .encode(json.encode(_parameters, toEncodable: jsonEncodeHelper)),
+        body: utf8.encode(json.encode(_parameters, toEncodable: jsonEncodeHelper)),
         encoding: Encoding.getByName('utf-8'),
       );
       Map<String, dynamic> body = json.decode(response.body);
@@ -106,8 +102,7 @@ class AlgoliaSettings {
   AlgoliaSettings setSearchableAttributes(List<String> value) {
     assert(value != null);
     assert(!_parameters.containsKey('searchableAttributes'));
-    return _copyWithParameters(
-        <String, dynamic>{'searchableAttributes': value});
+    return _copyWithParameters(<String, dynamic>{'searchableAttributes': value});
   }
 
   ///
@@ -137,8 +132,7 @@ class AlgoliaSettings {
   AlgoliaSettings setAttributesForFaceting(List<String> value) {
     assert(value != null);
     assert(!_parameters.containsKey('attributesForFaceting'));
-    return _copyWithParameters(
-        <String, dynamic>{'attributesForFaceting': value});
+    return _copyWithParameters(<String, dynamic>{'attributesForFaceting': value});
   }
 
   ///
@@ -159,8 +153,7 @@ class AlgoliaSettings {
   AlgoliaSettings setUnRetrievableAttributes(List<String> value) {
     assert(value != null);
     assert(!_parameters.containsKey('unretrievableAttributes'));
-    return _copyWithParameters(
-        <String, dynamic>{'unretrievableAttributes': value});
+    return _copyWithParameters(<String, dynamic>{'unretrievableAttributes': value});
   }
 
   ///
@@ -187,10 +180,8 @@ class AlgoliaSettings {
   AlgoliaSettings setAttributesToRetrieve(List<String> value) {
     assert(value != null);
     assert(!_parameters.containsKey('attributesToRetrieve'));
-    return _copyWithParameters(
-        <String, dynamic>{'attributesToRetrieve': value});
+    return _copyWithParameters(<String, dynamic>{'attributesToRetrieve': value});
   }
-
 
   ///
   /// **RestrictSearchableAttributes**
@@ -209,8 +200,7 @@ class AlgoliaSettings {
   AlgoliaSettings setRestrictSearchableAttributes(List<String> value) {
     assert(value != null);
     assert(!_parameters.containsKey('restrictSearchableAttributes'));
-    return _copyWithParameters(
-        <String, dynamic>{'restrictSearchableAttributes': value});
+    return _copyWithParameters(<String, dynamic>{'restrictSearchableAttributes': value});
   }
 
   ///
@@ -328,11 +318,9 @@ class AlgoliaSettings {
   ///
   AlgoliaSettings setFacetFilter(dynamic value) {
     assert(value is String || value is List<String>,
-    'value must be either String | List<String> but was found `${value.runtimeType}`');
-    final List<dynamic> facetFilters =
-    List<dynamic>.from(_parameters['facetFilters']);
-    assert(facetFilters.where((dynamic item) => value == item).isEmpty,
-    'FacetFilters $value already exists in this query');
+        'value must be either String | List<String> but was found `${value.runtimeType}`');
+    final List<dynamic> facetFilters = List<dynamic>.from(_parameters['facetFilters']);
+    assert(facetFilters.where((dynamic item) => value == item).isEmpty, 'FacetFilters $value already exists in this query');
     facetFilters.add(value);
     return _copyWithParameters(<String, dynamic>{'facetFilters': facetFilters});
   }
@@ -356,13 +344,10 @@ class AlgoliaSettings {
   /// Source: [Learn more](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/)
   ///
   AlgoliaSettings setOptionalFilter(String value) {
-    final List<String> optionalFilters =
-    List<String>.from(_parameters['optionalFilters']);
-    assert(optionalFilters.where((String item) => value == item).isEmpty,
-    'OptionalFilters $value already exists in this query');
+    final List<String> optionalFilters = List<String>.from(_parameters['optionalFilters']);
+    assert(optionalFilters.where((String item) => value == item).isEmpty, 'OptionalFilters $value already exists in this query');
     optionalFilters.add(value);
-    return _copyWithParameters(
-        <String, dynamic>{'optionalFilters': optionalFilters});
+    return _copyWithParameters(<String, dynamic>{'optionalFilters': optionalFilters});
   }
 
   ///
@@ -398,13 +383,10 @@ class AlgoliaSettings {
   /// Source: [Learn more](https://www.algolia.com/doc/api-reference/api-parameters/numericFilters/)
   ///
   AlgoliaSettings setNumericFilter(String value) {
-    final List<String> numericFilters =
-    List<String>.from(_parameters['numericFilters']);
-    assert(numericFilters.where((String item) => value == item).isEmpty,
-    'NumericFilters $value already exists in this query');
+    final List<String> numericFilters = List<String>.from(_parameters['numericFilters']);
+    assert(numericFilters.where((String item) => value == item).isEmpty, 'NumericFilters $value already exists in this query');
     numericFilters.add(value);
-    return _copyWithParameters(
-        <String, dynamic>{'numericFilters': numericFilters});
+    return _copyWithParameters(<String, dynamic>{'numericFilters': numericFilters});
   }
 
   ///
@@ -432,10 +414,8 @@ class AlgoliaSettings {
   /// Source: [Learn more](https://www.algolia.com/doc/api-reference/api-parameters/tagFilters/)
   ///
   AlgoliaSettings setTagFilter(String value) {
-    final List<String> tagFilters =
-    List<String>.from(_parameters['tagFilters']);
-    assert(tagFilters.where((String item) => value == item).isEmpty,
-    'TagFilters $value already exists in this query');
+    final List<String> tagFilters = List<String>.from(_parameters['tagFilters']);
+    assert(tagFilters.where((String item) => value == item).isEmpty, 'TagFilters $value already exists in this query');
     tagFilters.add(value);
     return _copyWithParameters(<String, dynamic>{'tagFilters': tagFilters});
   }
@@ -456,8 +436,7 @@ class AlgoliaSettings {
   /// Source: [Learn more](https://www.algolia.com/doc/api-reference/api-parameters/sumOrFiltersScores/)
   ///
   AlgoliaSettings setSumOrFiltersScore(bool value) {
-    assert(!_parameters.containsKey('sumOrFiltersScores'),
-    'SumOrFiltersScores $value already exists in this query');
+    assert(!_parameters.containsKey('sumOrFiltersScores'), 'SumOrFiltersScores $value already exists in this query');
     return _copyWithParameters(<String, dynamic>{'sumOrFiltersScores': value});
   }
 
@@ -543,8 +522,7 @@ class AlgoliaSettings {
   AlgoliaSettings setFacetingAfterDistinct({bool enable = true}) {
     assert(enable != null);
     assert(!_parameters.containsKey('facetingAfterDistinct'));
-    return _copyWithParameters(
-        <String, dynamic>{'facetingAfterDistinct': enable});
+    return _copyWithParameters(<String, dynamic>{'facetingAfterDistinct': enable});
   }
 
   ///
@@ -574,10 +552,8 @@ class AlgoliaSettings {
   AlgoliaSettings setSortFacetValuesBy(AlgoliaSortFacetValuesBy value) {
     assert(value != null);
     assert(!_parameters.containsKey('sortFacetValuesBy'));
-    return _copyWithParameters(<String, dynamic>{
-      'sortFacetValuesBy':
-      value.toString().substring(value.toString().indexOf('.') + 1)
-    });
+    return _copyWithParameters(
+        <String, dynamic>{'sortFacetValuesBy': value.toString().substring(value.toString().indexOf('.') + 1)});
   }
 
   ///
@@ -603,8 +579,7 @@ class AlgoliaSettings {
   AlgoliaSettings setAttributesToHighlight(List<String> value) {
     assert(value != null);
     assert(!_parameters.containsKey('attributesToHighlight'));
-    return _copyWithParameters(
-        <String, dynamic>{'attributesToHighlight': value});
+    return _copyWithParameters(<String, dynamic>{'attributesToHighlight': value});
   }
 
   ///
@@ -695,8 +670,7 @@ class AlgoliaSettings {
   AlgoliaSettings setRestrictHighlightAndSnippetArrays({bool enable = true}) {
     assert(enable != null);
     assert(!_parameters.containsKey('restrictHighlightAndSnippetArrays'));
-    return _copyWithParameters(
-        <String, dynamic>{'restrictHighlightAndSnippetArrays': enable});
+    return _copyWithParameters(<String, dynamic>{'restrictHighlightAndSnippetArrays': enable});
   }
 
   ///
@@ -827,8 +801,7 @@ class AlgoliaSettings {
   AlgoliaSettings setMinWordSizeFor2Typos(int value) {
     assert(value != null);
     assert(!_parameters.containsKey('minWordSizefor2Typos'));
-    return _copyWithParameters(
-        <String, dynamic>{'minWordSizefor2Typos': value});
+    return _copyWithParameters(<String, dynamic>{'minWordSizefor2Typos': value});
   }
 
   ///
@@ -866,8 +839,7 @@ class AlgoliaSettings {
   AlgoliaSettings setAllowTyposOnNumericTokens(bool value) {
     assert(value != null);
     assert(!_parameters.containsKey('allowTyposOnNumericTokens'));
-    return _copyWithParameters(
-        <String, dynamic>{'allowTyposOnNumericTokens': value});
+    return _copyWithParameters(<String, dynamic>{'allowTyposOnNumericTokens': value});
   }
 
   ///
@@ -884,8 +856,7 @@ class AlgoliaSettings {
   AlgoliaSettings setDisableTypoToleranceOnAttributes(List<String> value) {
     assert(value != null);
     assert(!_parameters.containsKey('disableTypoToleranceOnAttributes'));
-    return _copyWithParameters(
-        <String, dynamic>{'disableTypoToleranceOnAttributes': value});
+    return _copyWithParameters(<String, dynamic>{'disableTypoToleranceOnAttributes': value});
   }
 
   ///
@@ -898,10 +869,8 @@ class AlgoliaSettings {
   AlgoliaSettings setDisableTypoToleranceOnWords(List<String> value) {
     assert(value != null);
     assert(!_parameters.containsKey('disableTypoToleranceOnWords'));
-    return _copyWithParameters(
-        <String, dynamic>{'disableTypoToleranceOnWords': value});
+    return _copyWithParameters(<String, dynamic>{'disableTypoToleranceOnWords': value});
   }
-
 
   ///
   /// **SeparatorsToIndex**
@@ -919,8 +888,7 @@ class AlgoliaSettings {
   AlgoliaSettings setSeparatorsToIndex(String value) {
     assert(value != null);
     assert(!_parameters.containsKey('separatorsToIndex'));
-    return _copyWithParameters(
-        <String, dynamic>{'separatorsToIndex': value});
+    return _copyWithParameters(<String, dynamic>{'separatorsToIndex': value});
   }
 
   ///
@@ -974,8 +942,7 @@ class AlgoliaSettings {
   AlgoliaSettings setAroundLatLngViaIP(bool value) {
     assert(value != null);
     assert(!_parameters.containsKey('aroundLatLngViaIP'));
-    return _copyWithParameters(
-        <String, dynamic>{'aroundLatLngViaIP': value ?? false});
+    return _copyWithParameters(<String, dynamic>{'aroundLatLngViaIP': value ?? false});
   }
 
   ///
@@ -1021,8 +988,7 @@ class AlgoliaSettings {
   AlgoliaSettings setAroundRadius(dynamic value) {
     assert(value != null);
     assert(!_parameters.containsKey('aroundRadius'));
-    assert((value is int || (value is String && value == 'all')),
-    'value must be a `int` or `"all"`');
+    assert((value is int || (value is String && value == 'all')), 'value must be a `int` or `"all"`');
     return _copyWithParameters(<String, dynamic>{'aroundRadius': value});
   }
 
@@ -1112,8 +1078,7 @@ class AlgoliaSettings {
   AlgoliaSettings setInsideBoundingBox(List<BoundingBox> value) {
     assert(value != null && value.isNotEmpty, 'value can not be empty');
     assert(!_parameters.containsKey('insideBoundingBox'));
-    List<List<num>> list =
-    value.map((v) => [v.p1Lat, v.p1Lng, v.p2Lat, v.p2Lng]).toList();
+    List<List<num>> list = value.map((v) => [v.p1Lat, v.p1Lng, v.p2Lat, v.p2Lng]).toList();
     return _copyWithParameters(<String, dynamic>{'insideBoundingBox': list});
   }
 
@@ -1151,9 +1116,7 @@ class AlgoliaSettings {
   AlgoliaSettings setInsidePolygon(List<BoundingPolygonBox> value) {
     assert(value != null && value.isNotEmpty, 'value can not be empty');
     assert(!_parameters.containsKey('insidePolygon'));
-    List<List<num>> list = value
-        .map((v) => [v.p1Lat, v.p1Lng, v.p2Lat, v.p2Lng, v.p3Lat, v.p3Lng])
-        .toList();
+    List<List<num>> list = value.map((v) => [v.p1Lat, v.p1Lng, v.p2Lat, v.p2Lng, v.p3Lat, v.p3Lng]).toList();
     return _copyWithParameters(<String, dynamic>{'insidePolygon': list});
   }
 
@@ -1190,11 +1153,11 @@ class AlgoliaSettings {
   /// Source: [Learn more](https://www.algolia.com/doc/api-reference/api-parameters/ignorePlurals/)
   ///
   AlgoliaSettings setIgnorePlurals(dynamic value) {
-    assert(value != null ,'value can not be empty');
+    assert(value != null, 'value can not be empty');
     assert(!_parameters.containsKey('ignorePlurals'), '[ignorePlurals] can not be called multiple times.');
-    assert(((value is bool) || (value is List<String>)), "value must be true|false|['language ISO code', ...]; but value found was `${value.runtimeType}`");
-    return _copyWithParameters(
-        <String, dynamic>{'ignorePlurals': value});
+    assert(((value is bool) || (value is List<String>)),
+        "value must be true|false|['language ISO code', ...]; but value found was `${value.runtimeType}`");
+    return _copyWithParameters(<String, dynamic>{'ignorePlurals': value});
   }
 
   ///
@@ -1230,11 +1193,11 @@ class AlgoliaSettings {
   /// Source: [Learn more](https://www.algolia.com/doc/api-reference/api-parameters/removeStopWords/)
   ///
   AlgoliaSettings setRemoveStopWords(dynamic value) {
-    assert(value != null ,'value can not be empty');
+    assert(value != null, 'value can not be empty');
     assert(!_parameters.containsKey('removeStopWords'), '[removeStopWords] can not be called multiple times.');
-    assert(((value is bool) || (value is List<String>)), "value must be true|false|['language ISO code', ...]; but value found was `${value.runtimeType}`");
-    return _copyWithParameters(
-        <String, dynamic>{'removeStopWords': value});
+    assert(((value is bool) || (value is List<String>)),
+        "value must be true|false|['language ISO code', ...]; but value found was `${value.runtimeType}`");
+    return _copyWithParameters(<String, dynamic>{'removeStopWords': value});
   }
 
   ///
@@ -1439,7 +1402,6 @@ class AlgoliaSettings {
     assert(!_parameters.containsKey('ruleContexts'));
     return _copyWithParameters(<String, dynamic>{'ruleContexts': value});
   }
-
 
   ///
   /// **EnablePersonalization**
@@ -1688,7 +1650,6 @@ class AlgoliaSettings {
     return _copyWithParameters(<String, dynamic>{'numericAttributesForFiltering': value});
   }
 
-
   ///
   /// **AllowCompressionOfIntegerArray**
   ///
@@ -1707,7 +1668,6 @@ class AlgoliaSettings {
     return _copyWithParameters(<String, dynamic>{'allowCompressionOfIntegerArray': enabled});
   }
 
-
   ///
   /// **attributeForDistinct**
   ///
@@ -1722,8 +1682,7 @@ class AlgoliaSettings {
   AlgoliaSettings setAttributeForDistinct(String value) {
     assert(value != null, 'value can not be empty');
     assert(!_parameters.containsKey('attributeForDistinct'));
-    return _copyWithParameters(
-        <String, dynamic>{'attributeForDistinct': value});
+    return _copyWithParameters(<String, dynamic>{'attributeForDistinct': value});
   }
 
   ///
