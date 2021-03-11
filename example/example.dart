@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:algolia/algolia.dart';
 
 void main() async {
@@ -6,12 +7,7 @@ void main() async {
   /// Initiate Algolia in your project
   ///
   Algolia algolia = Application.algolia;
-  AlgoliaTask taskAdded,
-      taskUpdated,
-      taskDeleted,
-      taskBatch,
-      taskClearIndex,
-      taskDeleteIndex;
+  AlgoliaTask taskAdded, taskUpdated, taskDeleted, taskBatch, taskClearIndex;
   AlgoliaObjectSnapshot addedObject;
 
   ///
@@ -36,10 +32,7 @@ void main() async {
   ///
   /// -- A Delay of 3 seconds is added for algolia to cdn the object for retrieval.
   addedObject = await Future.delayed(Duration(seconds: 3), () async {
-    return await algolia.instance
-        .index('contacts')
-        .object(taskAdded.data['objectID'].toString())
-        .getObject();
+    return await algolia.instance.index('contacts').object(taskAdded.data['objectID'].toString()).getObject();
   });
 
   // Checking if has [AlgoliaObjectSnapshot]
@@ -52,10 +45,7 @@ void main() async {
   Map<String, dynamic> updateData = Map<String, dynamic>.from(addedObject.data);
   updateData['contact'] = '+1 609 567890';
   updateData['modifiedAt'] = DateTime.now();
-  taskUpdated = await algolia.instance
-      .index('contacts')
-      .object(addedObject.objectID)
-      .updateData(updateData);
+  taskUpdated = await algolia.instance.index('contacts').object(addedObject.objectID).updateData(updateData);
 
   // Checking if has [AlgoliaTask]
   print('\n\n');
@@ -64,10 +54,7 @@ void main() async {
   ///
   /// 4. Perform Delete Object to existing Index.
   ///
-  taskDeleted = await algolia.instance
-      .index('contacts')
-      .object(addedObject.objectID)
-      .deleteObject();
+  taskDeleted = await algolia.instance.index('contacts').object(addedObject.objectID).deleteObject();
 
   // Checking if has [AlgoliaTask]
   print('\n\n');
@@ -135,7 +122,6 @@ void main() async {
   ///
   /// 9. Perform Delete Index.
   ///
-  taskDeleteIndex = await algolia.instance.index('contact').deleteIndex();
 
   ///
   /// 10. Get Index Setting Instance.
