@@ -3,6 +3,7 @@ version: 1.0.1
 description: >
   Algolia is a pure dart SDK, wrapped around Algolia REST API for easy implementation for your Flutter or Dart projects.
 homepage: https://github.com/knoxpo/dart_algolia
+publish_to: none
 
 environment:
   sdk: ">=2.9.0 <3.0.0"
@@ -10,7 +11,10 @@ environment:
 dependencies:
   meta: 1.2.3
   http: ^0.12.2
-  node_http: ^1.0.0
+  node_http:
+    git:
+      url: git://github.com/Semapl3/node-interop
+      path: node_http
   uuid: 2.2.2
 
 dev_dependencies:
