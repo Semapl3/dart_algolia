@@ -9,12 +9,9 @@ environment:
   sdk: ">=2.9.0 <3.0.0"
 
 dependencies:
-  meta: 1.2.3
+  meta: ^1.1.8
   http: ^0.12.2
-  node_http:
-    git:
-      url: git://github.com/Semapl3/node-interop
-      path: node_http
+  node_interop: ^1.1.1
   uuid: 2.2.2
 
 dev_dependencies:
