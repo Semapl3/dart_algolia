@@ -12,6 +12,7 @@ dependencies:
   meta: ^1.1.8
   http: ^0.12.2
   node_interop: ^1.1.1
+  node_http: ^1.0.1
   uuid: 2.2.2
 
 dev_dependencies:
