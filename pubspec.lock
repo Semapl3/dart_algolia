@@ -179,29 +179,23 @@ packages:
   node_http:
     dependency: "direct main"
     description:
-      path: node_http
-      ref: HEAD
-      resolved-ref: e352ebe90a6dfdda88e28c353e339e02c2b2e882
-      url: "git://github.com/Semapl3/node-interop"
-    source: git
+      name: node_http
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "1.0.1"
   node_interop:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: node_interop
-      ref: HEAD
-      resolved-ref: e352ebe90a6dfdda88e28c353e339e02c2b2e882
-      url: "git://github.com/Semapl3/node-interop"
-    source: git
+      name: node_interop
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "1.2.1"
   node_io:
     dependency: transitive
     description:
-      path: node_io
-      ref: HEAD
-      resolved-ref: e352ebe90a6dfdda88e28c353e339e02c2b2e882
-      url: "git://github.com/Semapl3/node-interop"
-    source: git
+      name: node_io
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "1.2.0"
   node_preamble:
     dependency: transitive
